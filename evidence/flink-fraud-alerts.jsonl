@@ -1,0 +1,6 @@
+{"card_id":"CARD-FRAUD-RETRY","window_start":"2026-10-27T14:29:50Z","window_end":"2026-10-27T14:30:50Z","transactions_in_60_seconds":3,"alert_type":"POTENTIAL_FRAUD"}
+{"card_id":"CARD-FRAUD-RETRY","window_start":"2026-10-27T14:30:00Z","window_end":"2026-10-27T14:31:00Z","transactions_in_60_seconds":3,"alert_type":"POTENTIAL_FRAUD"}
+{"card_id":"CARD-WATERMARK-TEST","window_start":"2026-10-27T14:50:30Z","window_end":"2026-10-27T14:51:30Z","transactions_in_60_seconds":3,"alert_type":"POTENTIAL_FRAUD"}
+{"card_id":"CARD-WATERMARK-TEST","window_start":"2026-10-27T14:50:40Z","window_end":"2026-10-27T14:51:40Z","transactions_in_60_seconds":3,"alert_type":"POTENTIAL_FRAUD"}
+{"card_id":"CARD-WATERMARK-TEST","window_start":"2026-10-27T14:50:50Z","window_end":"2026-10-27T14:51:50Z","transactions_in_60_seconds":3,"alert_type":"POTENTIAL_FRAUD"}
+{"card_id":"CARD-WATERMARK-TEST","window_start":"2026-10-27T14:51:00Z","window_end":"2026-10-27T14:52:00Z","transactions_in_60_seconds":3,"alert_type":"POTENTIAL_FRAUD"}

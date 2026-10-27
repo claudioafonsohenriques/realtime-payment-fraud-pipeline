@@ -20,7 +20,7 @@ CREATE TABLE fraud_events_stream (
     'connector' = 'kafka',
     'topic' = 'payments.raw',
     'properties.bootstrap.servers' = 'kafka:9092',
-    'properties.group.id' = 'fraud-alert-stream-v1',
+    'properties.group.id' = 'fraud-alert-stream-v2',
     'scan.startup.mode' = 'latest-offset',
     'format' = 'json',
     'json.timestamp-format.standard' = 'ISO-8601'
