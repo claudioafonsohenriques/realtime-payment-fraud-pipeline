@@ -12,6 +12,7 @@ Pipeline local de processamento de pagamentos e deteção de padrões suspeitos,
 - [x] Processamento contínuo Kafka → Flink SQL → Kafka executado.
 - [x] Cenário positivo de streaming: três pagamentos aprovados numa janela de 60 segundos produziram alertas.
 - [x] Cenário de controlo: pagamentos separados por 80 segundos sem alertas encontrados para o cartão de teste.
+- [x] Evidências de streaming guardadas em `evidence/flink-fraud-alerts.jsonl`: seis alertas JSON válidos, distribuídos por dois cartões de teste.
 - [ ] Validar recuperação do job após falha e reinício.
 - [ ] Testar carga, duplicados e eventos atrasados.
 - [ ] Rever e consolidar testes automatizados e evidências.
@@ -130,7 +131,9 @@ O ficheiro `sql/06_flink_streaming_fraud_alerts.sql` configura um job contínuo 
 - watermark de 5 segundos;
 - janelas deslizantes de 60 segundos;
 - avanço de janela de 10 segundos;
-- limiar de três pagamentos aprovados por cartão.
+- limiar de três pagamentos aprovados por cartão;
+- grupo Kafka configurado como `fraud-alert-stream-v2`;
+- arranque em `latest-offset`, pelo que os eventos anteriores ao arranque não são relidos por um novo consumidor.
 
 ```bash
 docker compose exec -T jobmanager \
@@ -164,6 +167,13 @@ Um alerta esperado contém `alert_type` igual a `POTENTIAL_FRAUD`, o identificad
 
 O consumidor pode terminar com timeout quando não recebe mensagens novas durante o intervalo configurado. Avalia também a quantidade de mensagens processadas e o estado do job antes de concluir que ocorreu uma falha.
 
+### Evidências registadas
+
+- `evidence/flink-fraud-alerts.jsonl`: seis alertas JSON lidos do tópico de saída e validados. Os resultados incluem dois cartões de teste, com três transações aprovadas por janela.
+- `evidence/flink-fraud-alerts-consumer.log`: saída de diagnóstico do consumidor, incluindo o timeout após a leitura das mensagens disponíveis.
+
+Estas evidências representam mensagens acumuladas no tópico durante os testes; não significam que os seis alertas tenham sido produzidos numa única execução. O timeout do consumidor, isoladamente, não prova uma falha do job.
+
 ## Scripts do projeto
 
 | Ficheiro | Finalidade |
@@ -174,6 +184,8 @@ O consumidor pode terminar com timeout quando não recebe mensagens novas durant
 | `sql/04_flink_fraud_alerts.sql` | Pipeline batch Kafka → Flink → Kafka |
 | `sql/05_control_test.sql` | Consulta de controlo sobre eventos Kafka |
 | `sql/06_flink_streaming_fraud_alerts.sql` | Deteção contínua com janelas temporais |
+| `evidence/flink-fraud-alerts.jsonl` | Alertas JSON registados durante os testes |
+| `evidence/flink-fraud-alerts-consumer.log` | Registo de execução do consumidor Kafka |
 | `compose.yaml` | Serviços e configuração local |
 
 ## Limitações conhecidas
